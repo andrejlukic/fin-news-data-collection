@@ -17,6 +17,12 @@ htmlcov/
 .cache/
 .pytest_cache/
 __pycache__
+logs
+dbs
+url lists/
+log.dat
+indianstock.csv
+eggs
 
 # Windows
 Thumbs.db
