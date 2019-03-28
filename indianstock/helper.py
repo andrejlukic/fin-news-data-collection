@@ -40,7 +40,7 @@ def getLastNewsHash(n, sn=None):
     if(not os.path.isfile(fn)):        
         return None
 
-    with open('log.dat', 'r+') as f:
+    with open(fn, 'r+') as f:
         lines = f.readlines()
         if(lines and len(lines) > 0):
             i=len(lines)
