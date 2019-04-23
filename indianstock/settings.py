@@ -14,18 +14,24 @@ BOT_NAME = 'indianstock'
 SPIDER_MODULES = ['indianstock.spiders']
 NEWSPIDER_MODULE = 'indianstock.spiders'
 
-FEED_FORMAT = "csv"
-FEED_URI = "indianstock.csv"
-FEED_EXPORT_FIELDS = "date", "title", "subtitle", "body", "url", "project", "spider", "scrapedate"
-
 # Need to use , as a separator for the CSV file: 
 # https://stackoverflow.com/questions/5245047/modifiying-csv-export-in-scrapy
 FEED_EXPORTERS = {
     'csv': 'indianstock.csv_custom_separator.CsvOptionRespectingItemExporter',
 }
+FEED_FORMAT = "csv"
+FEED_URI = "indianstock.csv"
+FEED_EXPORT_FIELDS = "date", "title", "subtitle", "body", "url", "project", "spider", "scrapedate"
 CSV_DELIMITER = ";"
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
 #USER_AGENT = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/72.0.3626.121 Safari/537.36'
+
+LOG_FILE='log-indian-news-scraper.txt'
+LOG_ENABLED='True'
+# CRITICAL, ERROR, WARNING, INFO, DEBUG
+LOG_LEVEL='INFO'
+LOG_ENABLED='True'
+LOG_STDOUT='True'
 
 # Obey robots.txt rules
 ROBOTSTXT_OBEY = True

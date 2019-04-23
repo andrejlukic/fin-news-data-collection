@@ -3,16 +3,21 @@ import scrapy
 from datetime import datetime
 from dateutil.parser import *
 import re
+import os
 from scrapy.loader.processors import MapCompose, Join
 from scrapy.loader import ItemLoader
 from scrapy.loader.processors import Join
-from indianstock.items import StockArticleItem
+from ..items import StockArticleItem
 
 class ItimesbotSpider(scrapy.Spider):
     name = 'itimesbot'
     allowed_domains = ['https://economictimes.indiatimes.com']
-    with open(r"url lists\indiatimes_infy.csv", "rt") as f:
-        start_urls = [url.strip() for url in f.readlines()]
+    
+    url_list_dir = 'url lists'
+    start_urls = []
+    if(os.path.isdir(url_list_dir)):   
+        with open(r"{}\indiatimes_infy.csv".format(url_list_dir), "rt") as f:
+            start_urls = [url.strip() for url in f.readlines()]
     
     def parse(self, response):
        

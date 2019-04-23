@@ -1,18 +1,23 @@
 # -*- coding: utf-8 -*-
 import scrapy
+import os
 from datetime import datetime
 from dateutil.parser import *
 import re
 from scrapy.loader.processors import MapCompose, Join
 from scrapy.loader import ItemLoader
 from scrapy.loader.processors import Join
-from indianstock.items import StockArticleItem
+from ..items import StockArticleItem
 
-class BusinessStandardSpider(scrapy.Spider):
+class BusinessStandardSpider(scrapy.Spider):   
     name = 'business-standard'
     allowed_domains = ['http://www.business-standard.com']
-    with open(r"url lists\businessstandard_infy.csv", "rt") as f:
-        start_urls = [url.strip() for url in f.readlines()]
+    
+    url_list_dir = 'url lists'
+    start_urls = []
+    if(os.path.isdir(url_list_dir)):        
+        with open(r"{}\businessstandard_infy.csv".format(url_list_dir), "rt") as f:
+            start_urls = [url.strip() for url in f.readlines()]
     
     def parse(self, response):        
         l = ItemLoader(item=StockArticleItem(), response = response)

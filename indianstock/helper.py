@@ -6,7 +6,7 @@ import os
 def filterAlreadyParsed(news_dict, sn=None):
         if(not news_dict):            
             return
-        hold = getLastNewsHash(10, sn)
+        hold = getLastNewsHash(100, sn)
         if(not hold):            
             return news_dict
         else:            
@@ -14,15 +14,17 @@ def filterAlreadyParsed(news_dict, sn=None):
             return {nh:news_dict[nh] for nh in news_dict if nh not in hold}
         
 def updatelog(news_dict, sn=None):
-    fn = 'log.dat'
     if(sn):
-        fn = fn.replace('.','-'+sn+'.')
+        fn = 'log-{}.dat'.format(sn)
+    else:
+        fn = 'log.dat'
+
     if(news_dict):
         with open(fn, 'a') as f:
             for h, title_url in news_dict.items():                    
                 f.write(h+'\n')
                 
-def savenews(news_dictn, sn=None):
+def savenews(news_dict, sn=None):
     fn = 'news.csv'
     if(sn):
         fn = fn.replace('.','-'+sn+'.')
@@ -32,12 +34,15 @@ def savenews(news_dictn, sn=None):
                 writer = csv.writer(f, quoting=csv.QUOTE_ALL)
                 writer.writerow(title_url)
 
-def getLastNewsHash(n, sn=None):
+def getLastNewsHash(n, sn=None):    
     
-    fn = 'log.dat'
     if(sn):
-        fn = fn.replace('.','-'+sn+'.')        
-    if(not os.path.isfile(fn)):        
+        fn = 'log-{}.dat'.format(sn)
+    else:
+        fn = 'log.dat'
+    
+    if(not os.path.isfile(fn)):
+        print('{} not found'.format(fn))
         return None
 
     with open(fn, 'r+') as f:

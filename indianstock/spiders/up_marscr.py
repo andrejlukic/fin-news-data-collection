@@ -6,12 +6,12 @@ import re
 from scrapy.loader.processors import MapCompose, Join
 from scrapy.loader import ItemLoader
 from scrapy.loader.processors import Join
-from indianstock.items import StockArticleItem
-import indianstock.helper as hlp
+from ..items import StockArticleItem
+from ..helper import *
 import hashlib
 
-class ReutersSpider(scrapy.Spider):
-    name = 'marketscreener-update'
+class MarScreSpider(scrapy.Spider):
+    name = 'MarScreSpider'
     shortn = 'ms'
     #allowed_domains = ['https://in.reuters.com']    
     start_urls = ['https://www.marketscreener.com/news/markets/']
@@ -40,12 +40,12 @@ class ReutersSpider(scrapy.Spider):
         urls  = [base_url+link for link in links]
         hlist = [hashlib.md5(u.encode()).hexdigest() for u in urls]
         news_dict = {z[0]:list(z[1:]) for z in zip(hlist, titles, urls)}        
-        h = hlp.filterAlreadyParsed(news_dict, sn = self.shortn)
+        h = filterAlreadyParsed(news_dict, sn = self.shortn)
         if(h):            
             for c,v in h.items():                
                 yield scrapy.Request(v[1], callback=self.parse_news)
             #savenews(h)
-            hlp.updatelog(h, sn = self.shortn)
+            updatelog(h, sn = self.shortn)
         #else:
         #    print('No new news to save')
         
