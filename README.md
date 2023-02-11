@@ -1,6 +1,6 @@
 # Scraping financial news using scrapy
 
-Scraper consists of three spiders, IndiaTimes, Reuters and BusinessStandard and uses scrapy.
+Scraper consists of some predefined spiders to collect news from e.g. Reuters and BusinessStandard
 
 ### Description
 
